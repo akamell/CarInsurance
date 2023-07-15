@@ -1,9 +1,11 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using CarInsurance.Infrastructure;
 using CarInsurance.Infrastructure.Services;
-using FluentValidation;
-using CarInsurance.Application.Validations;
 using CarInsurance.Application.Services;
+using CarInsurance.Application.Validations;
+using CarInsurance.API.Configurations;
+using CarInsurance.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.Configure<MongoStoreDatabaseSettings>(
     builder.Configuration.GetSection("MongoStoreDatabase"));
 
 builder.Services.AddScoped<IInsuranceService, InsuranceMongoService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
@@ -22,6 +26,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateInsuranceValidator>()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthenticationToken(builder.Configuration);
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -31,9 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

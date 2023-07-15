@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using CarInsurance.Application.Services;
+using CarInsurance.Domain.Services;
 using CarInsurance.Controllers;
 using CarInsurance.Domain.Dtos;
 using CarInsurance.Domain.Entities;

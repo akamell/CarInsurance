@@ -1,13 +1,15 @@
-using CarInsurance.Application.Services;
+using CarInsurance.Domain.Services;
 using CarInsurance.Domain.Dtos;
 using CarInsurance.Domain.Entities;
 using CarInsurance.Domain.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarInsurance.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class InsuranceController : ControllerBase
     {
         private readonly IInsuranceService _insuranceService;

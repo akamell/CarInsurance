@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarInsurance.Application.Services
+namespace CarInsurance.Domain.Services
 {
     public interface IPersistenceService<T>
     {
